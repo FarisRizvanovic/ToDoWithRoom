@@ -5,4 +5,5 @@
     <string name="enter_a_task_name">Enter a task name</string>
     <string name="save_task">Save task</string>
     <string name="delete_all_entries">Delete all entries</string>
+    <string name="checkbox_done">Done?</string>
 </resources>

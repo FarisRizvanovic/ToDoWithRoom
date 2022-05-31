@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".TasksFragment">
 
@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_a_task_name"
-        android:inputType="text"
+        android:inputType="text|textCapSentences"
         tools:ignore="Autofill" />
 
     <Button
@@ -23,20 +23,20 @@
         android:text="@string/save_task" />
 
     <Button
+        android:id="@+id/delete_entries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/delete_all_entries"
-        android:id="@+id/delete_entries"/>
-
+        android:text="@string/delete_all_entries" />
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/tasks_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        android:layout_height="match_parent" />
+        app:spanCount="2" />
 
 
 </LinearLayout>

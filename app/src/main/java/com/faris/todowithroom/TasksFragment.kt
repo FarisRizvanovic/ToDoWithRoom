@@ -1,6 +1,7 @@
 package com.faris.todowithroom
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.faris.todowithroom.databinding.FragmentTasksBinding
 
 class TasksFragment : Fragment() {
@@ -33,7 +35,7 @@ class TasksFragment : Fragment() {
 
         viewModel.tasks.observe(viewLifecycleOwner, Observer {
             it.let {
-                adapter.data = it
+                adapter.submitList(it)
             }
         })
 
@@ -48,12 +50,40 @@ class TasksFragment : Fragment() {
 
         }
 
+        //Moving to top when item added!
+        adapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver(){
+            override fun onChanged() {
+                binding.tasksList.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                binding.tasksList.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                binding.tasksList.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.tasksList.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                binding.tasksList.smoothScrollToPosition(0)
+            }
+
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                binding.tasksList.smoothScrollToPosition(0)
+            }
+        })
+
         binding.deleteEntries.setOnClickListener {
             viewModel.deleteAllEntries()
         }
 
         return view
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
