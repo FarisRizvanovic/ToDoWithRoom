@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/enter_a_task_name"
-        android:inputType="text" />
+        android:inputType="text"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/save_button"
@@ -33,7 +34,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:id="@+id/tasks_list"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         android:layout_height="match_parent" />
 
 
