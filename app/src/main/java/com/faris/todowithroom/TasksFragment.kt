@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.faris.todowithroom.databinding.FragmentTasksBinding
 
@@ -30,12 +31,23 @@ class TasksFragment : Fragment() {
         val viewModel = ViewModelProvider(this, viewModelFactory)
             .get(TasksViewModel::class.java)
 
-        val adapter = TaskItemAdapter()
+        val adapter = TaskItemAdapter { taskId ->
+            viewModel.onTaskClicked(taskId)
+        }
         binding.tasksList.adapter = adapter
 
         viewModel.tasks.observe(viewLifecycleOwner, Observer {
             it.let {
                 adapter.submitList(it)
+            }
+        })
+
+        viewModel.navigateToTask.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val action = TasksFragmentDirections
+                    .actionTasksFragmentToEditTaskFragment(it)
+                this.findNavController().navigate(action)
+                viewModel.onTaskNavigated()
             }
         })
 
@@ -51,7 +63,7 @@ class TasksFragment : Fragment() {
         }
 
         //Moving to top when item added!
-        adapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver(){
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
                 binding.tasksList.smoothScrollToPosition(0)
             }
