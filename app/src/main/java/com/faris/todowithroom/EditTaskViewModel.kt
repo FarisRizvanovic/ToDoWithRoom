@@ -15,19 +15,19 @@ class EditTaskViewModel(taskId: Long, val dao: TaskDao) : ViewModel() {
 
     fun updateTask() {
         viewModelScope.launch {
-            dao.update(task.value!!)
             _navigateToList.value = true
+            dao.update(task.value!!)
         }
     }
 
     fun deleteTask() {
         viewModelScope.launch {
-            dao.delete(task.value!!)
             _navigateToList.value = true
+            dao.delete(task.value!!)
         }
     }
 
-    fun onNavigatedToList(){
+    fun onNavigatedToList() {
         _navigateToList.value = false
     }
 }

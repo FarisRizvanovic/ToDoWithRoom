@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.faris.todowithroom.databinding.FragmentEditTaskBinding
 import com.faris.todowithroom.databinding.FragmentTasksBinding
 
@@ -34,12 +35,25 @@ class EditTaskFragment : Fragment() {
             binding.taskDone.isChecked = it.taskDone
         })
 
+        viewModel.navigateToList.observe(viewLifecycleOwner, Observer {
+            if (it){
+                view.findNavController()
+                    .navigate(R.id.action_editTaskFragment_to_tasksFragment)
+                viewModel.onNavigatedToList()
+            }
+        })
 
+        binding.updateButton.setOnClickListener {
+            viewModel.task.value?.apply {
+                taskName = binding.taskName.text.toString()
+                taskDone = binding.taskDone.isChecked
+            }
+            viewModel.updateTask()
+        }
 
-
-
-
-
+        binding.deleteButton.setOnClickListener {
+            viewModel.deleteTask()
+        }
 
 
         return view
